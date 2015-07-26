@@ -9,89 +9,97 @@
 import UIKit
 
 class ItemsViewController: UITableViewController {
-
+    
+    var rssdb : RSSDB!
+    var feedID : NSNumber!
+    var feedRecord : Dictionary<NSObject, AnyObject>?
+    var itemRowIDs : NSArray?
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.rowHeight = 55.0
+        rssdb.deleteOldItems(feedID)
+        loadFeedRecord()
+        if let title = feedRecord?[kRSSDB.feedTitle] as! String? {
+            self.title = title
+        } else {
+            self.title = "Feed"
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Items"
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        loadFeed()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
+    
+    // MARK: Table view
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
+        itemRowIDs = rssdb.getItemIDs(feedID)
+        return itemRowIDs!.count
     }
-
-    /*
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! UITableViewCell
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCellWithIdentifier("ItemCell", forIndexPath: indexPath) as! UITableViewCell
+        
+        // Get the feed item
+        let itemID = itemRowIDs![indexPath.row] as! NSNumber
+        let thisFeedItem = rssdb.getItemRow(itemID)
+        
+        // Clever variable font size trick
+        let systemFontSize = UIFont.labelFontSize()
+        let headFontSize = systemFontSize * 0.9
+        let smallFontSize = systemFontSize * 0.8
+        let widthOfCell = tableView.rectForRowAtIndexPath(indexPath).size.width - 40.0
+        
+        if let itemText = thisFeedItem[kRSSDB.itemTitle] as? String {
+            cell.textLabel?.numberOfLines = 2
+            if itemText.sizeWithAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(headFontSize)]).width > widthOfCell {
+                cell.textLabel?.font = UIFont.boldSystemFontOfSize(smallFontSize)
+            } else {
+                cell.textLabel?.font = UIFont.boldSystemFontOfSize(headFontSize)
+            }
+            cell.textLabel?.text = itemText
+        }
+        
+        // Format the date -- this goes in the detailTextLabel property, which is the "subtitle" of the cell
+        cell.detailTextLabel?.font = UIFont.systemFontOfSize(smallFontSize)
+        cell.detailTextLabel?.text = dateToLocalizedString(SQLDateToDate(thisFeedItem[kRSSDB.itemPubDate] as! String))
+        
+        cell.layoutIfNeeded()
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    
+    // MARK: Support functions
+    
+    private func loadFeed() {
+        let loaditems = LoadItems(db: rssdb, feedID: feedID, tableView: self)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    
+    private func loadFeedRecord() -> NSDictionary {
+        if feedRecord == nil { feedRecord = rssdb.getFeedRow(feedID) }
+        return feedRecord!
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
+    // MARK: Error Handling
+    
+    func handleError(error: NSError) {
+        let errorMessage = error.localizedDescription
+        if error.domain == NSXMLParserErrorDomain && error.code >= 10 {
+            alertMessage("Cannot parse feed: \(errorMessage)")
+        } else {
+            alertMessage(errorMessage)
+        }
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    
+    func alertMessage(message: String) {
+        let alertView = UIAlertView(title: "BW RSS", message: message, delegate: nil, cancelButtonTitle: "OK")
+        alertView.show()
+        navigationController?.popViewControllerAnimated(true)
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
