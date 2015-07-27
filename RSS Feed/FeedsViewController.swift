@@ -15,7 +15,7 @@ class FeedsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "BW RSS"
+        self.title = "RSS Feed"
     }
     
     // MARK: - Table view data source
@@ -49,6 +49,15 @@ class FeedsViewController: UITableViewController {
         return cell
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ItemsSegue" {
+            let rssItemsViewController = segue.destinationViewController as! ItemsViewController
+            let path = tableView.indexPathForSelectedRow()!
+            rssItemsViewController.feedID = feedIDs[path.row]
+            rssItemsViewController.rssdb = rssdb
+        }
+    }
+    
     // MARK: Database methods
     
     private func loadFeedIDs() -> Array<Int> {
@@ -71,4 +80,5 @@ class FeedsViewController: UITableViewController {
         }
         return rssdb
     }
+    
 }
