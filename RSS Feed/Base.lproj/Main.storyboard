@@ -126,10 +126,10 @@
             </objects>
             <point key="canvasLocation" x="709" y="-630"/>
         </scene>
-        <!--Add Feed Controller-->
+        <!--Add Feed View Controller-->
         <scene sceneID="IoO-w9-gIv">
             <objects>
-                <viewController modalPresentationStyle="formSheet" id="h7f-lv-f8U" customClass="AddFeedController" customModule="RSS_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="formSheet" id="h7f-lv-f8U" customClass="AddFeedViewController" customModule="RSS_Feed" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QUz-iz-22d"/>
                         <viewControllerLayoutGuide type="bottom" id="fBy-4p-myo"/>

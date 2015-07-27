@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		842188751B667C31000D3BE6 /* AddFeedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842188741B667C31000D3BE6 /* AddFeedController.swift */; };
+		842188751B667C31000D3BE6 /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842188741B667C31000D3BE6 /* AddFeedViewController.swift */; };
 		84B478041B645C2900548095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B478031B645C2900548095 /* AppDelegate.swift */; };
 		84B478081B645C2900548095 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B478071B645C2900548095 /* DetailViewController.swift */; };
 		84B4780B1B645C2900548095 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B478091B645C2900548095 /* Main.storyboard */; };
@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		842188741B667C31000D3BE6 /* AddFeedController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFeedController.swift; sourceTree = "<group>"; };
+		842188741B667C31000D3BE6 /* AddFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
 		84B477FE1B645C2900548095 /* RSS Feed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RSS Feed.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B478021B645C2900548095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84B478031B645C2900548095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +84,7 @@
 				84B478341B645E9C00548095 /* FeedsViewController.swift */,
 				84B478071B645C2900548095 /* DetailViewController.swift */,
 				84B478381B64682100548095 /* ItemsViewController.swift */,
-				842188741B667C31000D3BE6 /* AddFeedController.swift */,
+				842188741B667C31000D3BE6 /* AddFeedViewController.swift */,
 				84B4783A1B646B1300548095 /* LoadItems.swift */,
 				84B4783C1B646B3500548095 /* Utilities.swift */,
 				84B478011B645C2900548095 /* Supporting Files */,
@@ -196,7 +196,7 @@
 				84B478081B645C2900548095 /* DetailViewController.swift in Sources */,
 				84B478391B64682100548095 /* ItemsViewController.swift in Sources */,
 				84B4782F1B645DF900548095 /* BWCRUD.m in Sources */,
-				842188751B667C31000D3BE6 /* AddFeedController.swift in Sources */,
+				842188751B667C31000D3BE6 /* AddFeedViewController.swift in Sources */,
 				84B478041B645C2900548095 /* AppDelegate.swift in Sources */,
 				84B4783D1B646B3500548095 /* Utilities.swift in Sources */,
 				84B4783B1B646B1300548095 /* LoadItems.swift in Sources */,
